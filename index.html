@@ -69,15 +69,14 @@
 <section id="home" class="hero" aria-labelledby="hero-title">
   <video
     class="hero-bg hero-video"
-    autoplay
     muted
     loop
     playsinline
-    preload="metadata"
-    poster="/work/photo_2026-07-10_22-53-27.jpg"
+    preload="none"
+    poster="/work/hero-poster.webp"
     aria-label="Civil engineering and architectural project slideshow"
   >
-    <source src="https://media.githubusercontent.com/media/khakiru/vanpanhapich_portfolio/main/work/Villa%20SR.mp4" type="video/mp4">
+    <source data-src="https://media.githubusercontent.com/media/khakiru/vanpanhapich_portfolio/main/work/Villa%20SR.mp4" type="video/mp4">
     Your browser does not support the video element.
   </video>
   <div class="hero-scrim"></div>
@@ -88,6 +87,7 @@
     <div class="hero-actions" aria-label="Primary actions">
       <a class="button primary" href="#work">View portfolio</a>
       <a class="button ghost" href="#contact">Email me</a>
+      <button class="button ghost hero-video-play" type="button"><i class="fa-solid fa-play" aria-hidden="true"></i> Play project video</button>
     </div>
     <dl class="hero-proof" aria-label="Profile highlights">
       <div><dt>Current profile</dt><dd>Civil Engineering Graduate</dd></div>
@@ -105,7 +105,7 @@
 
 <section id="profile" class="section profile" aria-labelledby="profile-title">
   <div class="portrait-wrap">
-    <img src="/work/vanpanhapich-ly-portrait.jpg" alt="Portrait of Vanpanhapich Ly"/>
+    <img src="/work/vanpanhapich-ly-portrait.jpg" alt="Portrait of Vanpanhapich Ly" loading="lazy" decoding="async"/>
   </div>
   <div class="profile-copy">
     <p class="eyebrow">Profile</p>
@@ -165,7 +165,7 @@
         </a>
       </div>
       <div class="project-gallery single-photo">
-        <a href="/work/structural-analysis-model.png" target="_blank" rel="noopener noreferrer" aria-label="View the structural model image"><img src="/work/structural-analysis-model.png" alt="Color-coded three-dimensional structural analysis model"/><span class="photo-cta"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> View structural model</span></a>
+        <a href="/work/structural-analysis-model.webp" target="_blank" rel="noopener noreferrer" aria-label="View the structural model image"><img src="/work/structural-analysis-model.webp" alt="Color-coded three-dimensional structural analysis model" loading="lazy" decoding="async"/><span class="photo-cta"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> View structural model</span></a>
       </div>
     </article>
     <article class="project">
@@ -179,7 +179,7 @@
         </div>
       </div>
       <div class="project-gallery single-photo site-photo">
-        <a href="/work/rad-c-site-internship.png" target="_blank" rel="noopener noreferrer" aria-label="View the RAD and C construction site photo"><img src="/work/rad-c-site-internship.png" alt="Vanpanhapich wearing site safety gear at a construction site beside a tower crane"/><span class="photo-cta"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> View site photo</span></a>
+        <a href="/work/rad-c-site-internship.webp" target="_blank" rel="noopener noreferrer" aria-label="View the RAD and C construction site photo"><img src="/work/rad-c-site-internship.webp" alt="Vanpanhapich wearing site safety gear at a construction site beside a tower crane" loading="lazy" decoding="async"/><span class="photo-cta"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> View site photo</span></a>
       </div>
     </article>
   </div>
@@ -208,7 +208,7 @@
       </div>
       <div class="project-gallery single-photo">
           <a href="/downloads/backyard-sr-villa-tender-drawings.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open the Backyard SR Villa architectural tender PDF">
-            <img src="/work/backyard-sr-villa-photo.jpg" alt="Backyard SR Villa exterior"/>
+            <img src="/work/backyard-sr-villa-photo.webp" alt="Backyard SR Villa exterior" loading="lazy" decoding="async"/>
             <span class="photo-cta"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> View tender drawings <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
           </a>
       </div>
@@ -230,7 +230,7 @@
         </a>
       </div>
       <div class="project-gallery single-photo">
-        <a href="/downloads/sr-villa-interior-tender-drawings.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open the SR Villa Interior tender PDF"><img src="/work/sr-villa-interior-dining.jpg" alt="SR Villa interior dining room rendering"/><span class="photo-cta"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> View tender drawings <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span></a>
+        <a href="/downloads/sr-villa-interior-tender-drawings.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open the SR Villa Interior tender PDF"><img src="/work/sr-villa-interior-dining.jpg" alt="SR Villa interior dining room rendering" loading="lazy" decoding="async"/><span class="photo-cta"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> View tender drawings <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span></a>
       </div>
     </article>
   </div>
@@ -323,6 +323,24 @@
 </section>
 </main>
 <script>
+  const heroVideo = document.querySelector(".hero-video");
+  const heroVideoPlay = document.querySelector(".hero-video-play");
+  heroVideoPlay.addEventListener("click", async () => {
+    const source = heroVideo.querySelector("source");
+    if (!source.src) {
+      source.src = source.dataset.src;
+      heroVideo.load();
+    }
+
+    heroVideo.controls = true;
+    try {
+      await heroVideo.play();
+      heroVideoPlay.hidden = true;
+    } catch {
+      heroVideoPlay.focus();
+    }
+  });
+
   const menuToggle = document.querySelector(".menu-toggle");
   const navLinks = document.querySelector(".navlinks");
 

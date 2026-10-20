@@ -145,6 +145,7 @@ p{color:var(--color-secondary);font-size:1.02rem;line-height:1.68}
 .hero-proof dd{color:var(--color-on-primary);margin:0;font-size:1rem}
 
 .hero-actions,.contact-actions{flex-wrap:wrap;gap:12px;margin-top:28px;display:flex}
+.hero-video-play[hidden]{display:none}
 .button{
   cursor:pointer;
   font-family:var(--font-mono), monospace;
