@@ -69,10 +69,11 @@
 <section id="home" class="hero" aria-labelledby="hero-title">
   <video
     class="hero-bg hero-video"
+    autoplay
     muted
     loop
     playsinline
-    preload="none"
+    preload="metadata"
     poster="/work/hero-poster.webp"
     aria-label="Civil engineering and architectural project slideshow"
   >
@@ -325,21 +326,30 @@
 <script>
   const heroVideo = document.querySelector(".hero-video");
   const heroVideoPlay = document.querySelector(".hero-video-play");
-  heroVideoPlay.addEventListener("click", async () => {
+  const startHeroVideo = async (showControls = false) => {
     const source = heroVideo.querySelector("source");
     if (!source.src) {
       source.src = source.dataset.src;
       heroVideo.load();
     }
 
-    heroVideo.controls = true;
+    heroVideo.controls = showControls;
     try {
       await heroVideo.play();
       heroVideoPlay.hidden = true;
     } catch {
-      heroVideoPlay.focus();
+      heroVideoPlay.hidden = false;
     }
-  });
+  };
+
+  heroVideoPlay.addEventListener("click", () => startHeroVideo(true));
+  window.addEventListener("load", () => {
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(() => startHeroVideo(), { timeout: 2500 });
+    } else {
+      window.setTimeout(() => startHeroVideo(), 1000);
+    }
+  }, { once: true });
 
   const menuToggle = document.querySelector(".menu-toggle");
   const navLinks = document.querySelector(".navlinks");
